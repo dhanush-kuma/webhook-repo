@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Activity Monitor</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f6f8fa; color: #24292e; padding: 40px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .event-card { 
+            background: white; border: 1px solid #d0d7de; border-radius: 6px; 
+            padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .event-card:hover { transform: translateX(5px); }
+        .timestamp { color: #57606a; font-size: 0.85em; margin-top: 8px; }
+        .author { font-weight: bold; color: #0969da; }
+        .branch { font-family: monospace; background: #afb8c133; padding: 2px 4px; border-radius: 4px; }
+        h1 { border-bottom: 1px solid #d0d7de; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Latest Events</h1>
+        <div id="sync-status" style="margin-bottom: 20px; color: #57606a; font-style: italic;">
+            Next sync in: <span id="timer" style="font-weight: bold; color: #0969da;">15</span>s
+        </div>
+        <div id="events-container">
+            <p>Loading recent activity...</p>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

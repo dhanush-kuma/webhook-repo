@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from pymongo import MongoClient
 from dotenv import load_dotenv
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import os
 
 load_dotenv()
@@ -19,11 +19,10 @@ try:
 except Exception as e:
     print("MongoDB Error", e)
 
-# Hello World route
+
 @app.route("/")
 def home():
-    print("HOME HIT", flush=True)
-    return "Server is running"
+    return render_template('index.html')
 
 @app.route("/webhook", methods = ['POST'])
 def webhook():
@@ -65,6 +64,17 @@ def webhook():
 
     return {"status": "ok"}, 200
 
+@app.route("/events")
+def events():
+    cutoff_time = datetime.now(timezone.utc) - timedelta(seconds=15)
+    query = {"timestamp": {"$gte": cutoff_time}}
+    records = list(collection.find(query))
+    for record in records:
+        record['_id'] = str(record['_id'])
+        if isinstance(record.get('timestamp'), datetime):
+            record['timestamp'] = record['timestamp'].isoformat()
+
+    return jsonify(records)
 
 if __name__ == "__main__":
     app.run(debug=True)
