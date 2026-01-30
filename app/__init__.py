@@ -65,7 +65,7 @@ def create_app():
     # this endpoint if for ui to poll every 15s to fetch recent records.
     @app.route("/events")
     def events():
-        cutoff_time = datetime.now(timezone.utc) - timedelta(seconds=35)
+        cutoff_time = datetime.now(timezone.utc) - timedelta(seconds=15)
         query = {"timestamp": {"$gte": cutoff_time}}
         
         records = list(collection.find(query))
